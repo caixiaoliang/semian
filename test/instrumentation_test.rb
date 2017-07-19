@@ -40,9 +40,9 @@ class TestInstrumentation < Minitest::Test
 
   def test_success_instrumentation_wait_time
     hit = false
-    subscription = Semian.subscribe do |*_, wait_time:|
+    subscription = Semian.subscribe do |*_, benchmarks:|
       hit = true
-      assert(wait_time.is_a?(Integer))
+      assert(benchmarks[:acquire_wait_time].is_a?(Integer))
     end
     Semian[:testing].acquire {}
     assert(hit)
